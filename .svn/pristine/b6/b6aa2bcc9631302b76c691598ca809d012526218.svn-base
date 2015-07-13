@@ -1,0 +1,136 @@
+
+
+/* ==========================================================================
+   Author's custom styles
+   ========================================================================== */
+
+a:link {
+    color: #1122cc;
+}
+
+a:visited {
+    color: #609;
+}
+
+.results, .company, .summary, .desc, .location{
+    text-align: left;
+    font-family: 'Roboto', sans-serif;
+}
+
+
+.desc {
+    color: #545454;
+    line-height: 1.4;
+    word-wrap: break-word;
+    font-size: small;
+    font-family: 'Roboto', sans-serif;
+}
+.summary {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    color: #428bca;
+}
+.company {
+    color: #000;
+    font-weight: 300;
+}
+
+.location {
+    color: #808080;
+    text-align: right;
+    font-weight: 300;
+}
+
+
+table, th, td {
+    border: 0px solid black;
+}
+.jobresult {
+    padding-top: 5px;
+    padding-bottom: 2px;
+    padding-left: 15px;
+    padding-right: 15px;
+    width: 500px;
+    display: block;
+
+}
+.jobresult:hover {
+    padding-left: 13px;
+    background-color: #f9f9f9;
+    border-left-width: 2px;
+    border-left-color: #e5e5e5;
+    border-left-style: groove;
+}
+
+.title {
+    font-size: 16px !important;
+    font-weight: 500;
+    text-decoration: underline;
+    font-weight: bolder;
+}
+
+.well {
+    background-color: #fff;
+}
+
+.small {
+    color: #777;
+    font-weight: 300;
+    font-style: italic;
+}
+
+.navitem {
+    vertical-align: initial;
+    margin-left: 125px;
+    margin-top: 20px;
+}
+
+.h1-results {
+    margin-top: 20px;
+    margin-right: 25px;
+}
+
+.logo {
+    font-size: 36px;
+}
+.logo-results {
+    width: 175px;
+    font-size: 28px;
+    font-family: 'Roboto', sans-serif;
+    margin-right: 25px;
+}
+
+.results-div {
+    margin: 0 auto;
+    width: 100%;
+    height: 100%;
+
+}
+
+.col1 {
+    margin-left: 10px;
+    height: 100%;
+    float: left;
+    width: 200px;    
+}
+
+.col2 {
+    float: left;
+    width: 300px;
+}
+
+.square {
+  -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+          border-radius: 0 !important;
+}
+.pagination > li > a:hover {
+    cursor: pointer; cursor: hand;
+}
+
+.pagination > li.active > a,
+.pagination > li.active > a:hover {
+    background-color: #777;
+    cursor: auto;
+}
+

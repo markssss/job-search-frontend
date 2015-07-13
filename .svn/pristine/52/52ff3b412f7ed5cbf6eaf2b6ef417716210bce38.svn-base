@@ -1,0 +1,23 @@
+
+<nav class="navbar navbar-default navbar-static-top" role="navigation">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <h1 class="logo-results">Job Search</h1>
+        </div>
+        <div class="navbar-header  navitem" style="margin-bottom: 15px;">
+            <form class="form-inline " role="form" method="get" action="search" id="searchForm">
+                <div class="form-group">
+                    <input id="tags" type="text" placeholder="skills and keywords" class="form-control square" >
+                </div>
+                <div class="form-group">
+                    <input id="loc" type="text" placeholder="city, state or zip" class="form-control square">
+                </div>
+                <button id="searchBtn" type="submit" class="btn btn-danger">Search</button>
+            </form> 
+        </div>
+    </div>
+</nav>
+
+<script>
+    $("#searchBtn").click(search);
+</script>

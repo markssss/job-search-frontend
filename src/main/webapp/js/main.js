@@ -1,0 +1,122 @@
+var currentPage = 1;
+
+$(document).ready(function() {
+
+    $.ajaxSetup({cache: false});
+    $("#searchBtn").click(search);
+//    $("#searchBtn").click(function(e) {
+//        e.preventDefault();
+//        $.ajax({
+//            type: "GET",
+//            url: "../",
+//            dataType: "json",
+//            data: {q: document.getElementById("tags").value, l: document.getElementById("loc").value},
+//            success: handleResults
+//        });
+//    });
+});
+
+function search(e) {
+    currentPage = 1;
+    e.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "../search/",
+        dataType: "json",
+        data: {q: document.getElementById("tags").value, l: document.getElementById("loc").value},
+        success: handleResults
+    });
+}
+
+function page(num) {
+    currentPage = num;
+    num--;
+    if (num !== 0)
+        num = (num * 10);
+    //e.preventDefault();
+    $.ajax({
+        type: "GET",
+        url: "../search/",
+        dataType: "json",
+        data: {q: document.getElementById("tags").value, l: document.getElementById("loc").value, b: num},
+        success: handleResults
+    });
+}
+
+function handleResults(data) {
+    //console.log("handling results .... ");
+    var tags = $("#tags").val();
+    var loc = $("#loc").val();
+    if ($("#sitewrapper").length) {
+        $("#sitewrapper").remove();
+        $("#results-nav").load("results-partial.html", function() {
+            $(this).find("#tags").val(tags);
+            $(this).find("#loc").val(loc);
+        });
+    }
+
+    $("#results").empty();
+    console.log(" ::: total results: " + data.totalHits + " results. tags: " + tags + " loc: " + loc);
+    if (data.totalHits === 0 /*data.job.length === 0*/ ) {
+        $("#results").append("<div class='width: 400px; '><table><tr><td><span style='text-align: center;'>0 jobs found.</span></td></tr></table></div>");
+        return;
+    }
+    var jobHtml;
+    var job;
+    for (var i = 0; i < data.job.length; i++) {
+        //console.log(i + ".   " + data.job[i].title + " | " + data.job[i].summary);
+        job = data.job[i];
+        jobHtml = "";
+
+        jobHtml = "<div class='jobresult' ><a rel='nofollow' target='_blank' href='" + job.directLink + "' title='" + job.title + "'><span class='title'>" + job.title + "</span></a><table>";
+        jobHtml += "<tr><td class='company'>" + job.companyName + "</td><td class='location'>" + job.city + " - " + job.stateCode + "</td></tr>";
+        //jobHtml += "<tr><td colspan='2' class='summary'>"+job.summary+"</td></tr>";
+        jobHtml += "<tr><td colspan='2' class='desc'>" + job.description + "</td></tr></table>";
+        jobHtml += "<div class='small'>" + howOldIsIt(job.postedDate) + " </div></div>";
+        howOldIsIt(job.postedDate);
+        $("#results").append(jobHtml);
+
+    }
+    addPagination(data);
+    window.scrollTo(0, 0);
+}
+
+function addPagination(data) {
+    var maxPages = 5;
+    var pages = data.totalHits / 10;
+    if (data.totalHits % 10 > 0)
+        pages += 1;
+
+    var pagin = "<ul class='pagination'>";
+    if (pages > 0) {
+        for (var i = 1; i <= pages; i++) {
+            //console.log("i: " + i + " currentPage: " + currentPage);
+            if (i === currentPage)
+                pagin += '<li class="active "><a onClick="javascript:page(' + i + ');">' + i + '</a></li>';
+            else
+                pagin += '<li><a onClick="javascript:page(' + i + ');">' + i + '</a></li>';
+        }
+    }
+    pagin += "</ul>";
+    $("#results").append(pagin);
+}
+
+function howOldIsIt(date) {
+    //console.log("date: " + date);
+    var d = new Date(date);
+    d = Date.now() - d;
+    var daysAgo = ((((d / 1000) / 60) / 60) / 24);
+    //console.log("d: " + d + " days since posted: " + daysAgo);
+
+    if (daysAgo > 0) {
+        d = "posted " + Math.floor(daysAgo) + " days ago";
+    } else {
+        var h = (((d / 1000) / 60) / 60);
+        if (h > 0)
+            d = "posted " + Math.floor(h) + " hours ago";
+        else
+            d = "posted less than an hour ago"
+    }
+    return d;
+}
+
